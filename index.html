@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: lightcoral;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            /* border-radius: 50%; */
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <script>
+        let div = document.querySelector('div');
+        div.onmousedown = function (e) {
+            //鼠标按下的时候记录鼠标的起始位置
+            let startX = e.clientX;
+            let startY = e.clientY;
+
+            let X = div.offsetLeft;
+            let Y = div.offsetTop;
+            document.onmousemove = function (e) {
+                //鼠标移动的时候记录种植位置
+                let endX = e.clientX;
+                let endY = e.clientY;
+                let detaX = endX - startX;
+                let detaY = endY - startY;
+                let finalX = X + detaX;
+                let finalY = Y + detaY;
+
+                let minX = 0,
+                    maxX = document.documentElement.clientWidth - div.offsetWidth;
+                minY = 0,
+                    maxY = document.documentElement.clientHeight - div.offsetHeight;
+
+                if (finalX > maxX) {
+                    finalX = maxX
+                } else if (finalX < minX) {
+                    finalX = minX
+                } else {
+                    finalX = finalX
+                }
+                if (finalY > maxY) {
+                    finalY = maxY
+                } else if (finalY < minY) {
+                    finalY = minY
+                } else {
+                    finalY = finalY
+                }
+
+                div.style.left = finalX + 'px'
+                div.style.top = finalY + 'px';
+
+            }
+            document.onmouseup = function () {
+                document.onmousemove = null;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
